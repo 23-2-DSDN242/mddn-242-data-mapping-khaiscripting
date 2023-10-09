@@ -18,22 +18,22 @@ function setup () {
 
   imageMode(CENTER);
   noStroke();
-  background(0, 0, 120);
+  background(255, 100, 170);
   sourceImg.loadPixels();
   maskImg.loadPixels();
   colorMode(HSB);
 }
 
-let xStop = 600;
-let yStop = 800;
-// let xStop = 1920;
-// let yStop = 1080;
+// let xStop = 600;
+// let yStop = 800;
+let xStop = 1920;
+let yStop = 1080;
 
 function draw () {
   let num_lines_to_draw = 40;
   // get one scanline
-  for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<xStop; j++) {
-    for(let i=0; i<yStop; i++) {
+  for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<yStop; j++) {
+    for(let i=0; i<xStop; i++) {
       colorMode(RGB);
       let pix = sourceImg.get(i, j);
       // create a color from the values (always RGB)
@@ -50,13 +50,13 @@ function draw () {
         let s = saturation(col);
         let b = brightness(col);
 
-        let newHue = map(h, 0, 100, 0, 360);
-        let newSat = map(s, 0, 100, 0, 360);
-        let newBri = map(b, 0, 100, 0, 360);
+         newHue = map(h, 0, 100, 20, 150);
+         newSat = map(s, 0, 100, 60, 100);
+         newBri = map(b, 0, 100, 40, 250);
 
-        let newColor = color(newHue, newSat, newBri, 10);
+        newColor = color(newHue, newSat, newBri, 10);
 
-        set(i, j, newColor);
+        set(i + 15, j, newColor);
       }
       //outisde (how to draw background with normal)
       else {
@@ -72,7 +72,7 @@ function draw () {
     console.log("Done!")
     noLoop();
     // uncomment this to save the result
-    // saveArtworkImage(outputFile);
+    saveArtworkImage(outputFile);
   }
 }
 
