@@ -1,6 +1,6 @@
-let sourceImg=null;
 let maskImg=null;
 let renderCounter=0;
+let sourceImg=null;
 
 // change these three lines as appropiate
 let sourceFile = "input_1.jpg";
@@ -24,11 +24,16 @@ function setup () {
   colorMode(HSB);
 }
 
+let xStop = 600;
+let yStop = 800;
+// let xStop = 1920;
+// let yStop = 1080;
+
 function draw () {
   let num_lines_to_draw = 40;
   // get one scanline
-  for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<1080; j++) {
-    for(let i=0; i<1920; i++) {
+  for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<xStop; j++) {
+    for(let i=0; i<yStop; i++) {
       colorMode(RGB);
       let pix = sourceImg.get(i, j);
       // create a color from the values (always RGB)
@@ -38,7 +43,20 @@ function draw () {
 
       //inside
       if(mask[0] > 128) {
-        set(i, j, color(255, 0, 0, 10));
+        colorMode(HSB)
+        let col = color(pix);
+
+        let h = hue(col);
+        let s = saturation(col);
+        let b = brightness(col);
+
+        let newHue = map(h, 0, 100, 0, 360);
+        let newSat = map(s, 0, 100, 0, 360);
+        let newBri = map(b, 0, 100, 0, 360);
+
+        let newColor = color(newHue, newSat, newBri, 10);
+
+        set(i, j, newColor);
       }
       //outisde (how to draw background with normal)
       else {
@@ -50,7 +68,7 @@ function draw () {
   renderCounter = renderCounter + num_lines_to_draw;
   updatePixels();
   // print(renderCounter);
-  if(renderCounter > 1080) {
+  if(renderCounter > yStop) {
     console.log("Done!")
     noLoop();
     // uncomment this to save the result
