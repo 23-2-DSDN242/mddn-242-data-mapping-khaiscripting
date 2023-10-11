@@ -59,24 +59,19 @@ function draw() {
         newGreen = map(g, 90, 100, 0, random(110));
         newBlue = map(b, 90, 100, 0, random(105));
         
-        newColor = color(newRed, newGreen,newBlue, 210);
+        newColor = color(newRed, newGreen,newBlue, 190);
 
         //pixels position
         let wave = sin(j * random(100));
-        let xMovement = map(wave, -1, 1, -OFFSET- 50, OFFSET +50);
+        let xMovement = map(wave, -1, 1, -OFFSET, OFFSET);
         wave = tan(j * random(50));
         let yMovement = map(wave, -1, 1, -OFFSET, OFFSET/5);
 
-        set(i + xMovement *0.6, j - yMovement, newColor);
         
-        for(let step = 0; step < yStop/num_lines_to_draw; step++){
-          if(step % 11){
-            color(69)
-            let lineMark = rect(step, step, yStop, 3)
-            set(i, j - (2/step), lineMark);
-          }
-        }
-        
+        set(i + xMovement *0.4, j - yMovement, newColor);
+
+        let CRTLine = color(random(40, 100));
+        set(i, -20*random(sin(j/10)) + j, CRTLine);
       }
       //inside
       else {
