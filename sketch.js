@@ -3,9 +3,9 @@ let renderCounter = 0;
 let sourceImg = null;
 
 // change these three lines as appropiate
-let sourceFile = "input_6.jpg";
-let maskFile = "mask_6.png";
-let outputFile = "output_6.png";
+let sourceFile = "input_1.jpg";
+let maskFile = "mask_1.png";
+let outputFile = "output_1.png";
 
 function preload() {
   sourceImg = loadImage(sourceFile);
@@ -59,7 +59,7 @@ function draw() {
         newGreen = map(g, 90, 100, 0, random(110));
         newBlue = map(b, 90, 100, 0, random(105));
         
-        newColor = color(newRed, newGreen,newBlue, 235);
+        newColor = color(newRed, newGreen,newBlue, 135);
 
         //pixels position
         let wave = sin(i * random(50));
