@@ -3,9 +3,9 @@ let renderCounter = 0;
 let sourceImg = null;
 
 // change these three lines as appropiate
-let sourceFile = "input_2.jpg";
-let maskFile = "mask_2.png";
-let outputFile = "output_2.png";
+let sourceFile = "input_6.jpg";
+let maskFile = "mask_6.png";
+let outputFile = "output_6.png";
 
 function preload() {
   sourceImg = loadImage(sourceFile);
@@ -21,15 +21,14 @@ function setup() {
   background(69);
   sourceImg.loadPixels();
   maskImg.loadPixels();
-  loadPixels();
   colorMode(HSB);
 }
 
-// let xStop = 600;
-// let yStop = 800;
+// let xStop =160;
+// let yStop = 160;
 let xStop = 1920;
 let yStop = 1080;
-let OFFSET = 20;
+let OFFSET = 10;
 
 function draw() {
   let num_lines_to_draw = 40;
@@ -47,7 +46,7 @@ function draw() {
 
       //outisde (how to draw background with normal)
       if (mask[1] < 128) {
-        // draw the full pixels
+        //colors
         let fuzz = color(pix);
 
         colorMode(RGB)
@@ -56,39 +55,53 @@ function draw() {
         let g = green(fuzz);
         let b = blue(fuzz);
 
-        newRed = map(r, 90, 100, 0, random(165));
-        newGreen = map(g, 90, 100, 0, random(210));
-        newBlue = map(b, 90, 100, 0, random(185));
+        newRed = map(r, 90, 100, 0, random(185));
+        newGreen = map(g, 90, 100, 0, random(110));
+        newBlue = map(b, 90, 100, 0, random(105));
         
-        newColor = color(newRed, newGreen,newBlue, 180);
+        newColor = color(newRed, newGreen,newBlue, 210);
 
+        //pixels position
         let wave = sin(j * random(100));
-        let movement = map(wave, -1, 1, -OFFSET- 50, OFFSET +50);
+        let xMovement = map(wave, -1, 1, -OFFSET- 50, OFFSET +50);
+        wave = tan(j * random(50));
+        let yMovement = map(wave, -1, 1, -OFFSET, OFFSET/5);
+
+        set(i + xMovement *0.6, j - yMovement, newColor);
         
-        set(i + movement *0.6, j, newColor);
+        for(let step = 0; step < yStop/num_lines_to_draw; step++){
+          if(step % 11){
+            color(69)
+            let lineMark = rect(step, step, yStop, 3)
+            set(i, j - (2/step), lineMark);
+          }
+        }
+        
       }
       //inside
       else {
         colorMode(HSB);
         let col = color(pix);
-
+        
         let h = hue(col);
         let s = saturation(col);
         let b = brightness(col);
 
         newHue = map(h, 0, 100, 20, 150);
-        newSat = map(s, 0, 100, 60, 100);
+        newSat = map(s, 0, 100, 80, 100);
         newBri = map(b, 0, 100, 100, 360);
 
+        strokeCol = stroke(255);
         newColor = color(newHue, newSat, newBri);
-
+        
+        set(i+18, j+5, strokeCol);
         set(i, j, newColor);
       }
     }
   }
   renderCounter = renderCounter + num_lines_to_draw;
   updatePixels();
-  // print(renderCounter);
+  print(renderCounter);
   if (renderCounter > yStop) {
     console.log("Done!");
     noLoop();
